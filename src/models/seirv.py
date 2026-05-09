@@ -18,7 +18,7 @@ def seriv_model(t, y, N, beta0, eta, sigma, gamma, nu):
 
     beta_eff = beta0 * ( 1 - eta * I / N)
 
-    beta_eff = mas(beta_eff, 0)
+    beta_eff = max(beta_eff, 0)
 
     dSdt = -beta_eff * S * I / N - nu * S
     dEdt = beta_eff * S * I / N - sigma * E
