@@ -1,6 +1,6 @@
 import numpy as np
 
-def seriv_model(t, y, N, beta0, eta, sigma, gamma, nu):
+def seirv_model(t, y, N, beta0, eta, sigma, gamma, nu):
     """
     Implementimi i sisetmit SEIRV me kontakt te varur nga sjellja.
 
