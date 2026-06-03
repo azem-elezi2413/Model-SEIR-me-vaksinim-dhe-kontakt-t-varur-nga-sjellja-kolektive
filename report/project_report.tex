@@ -1,1 +1,75 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[albanian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
 
+\title{\textbf{Raport Shkencor: Analiza e Modelit Epidemiologjik SEIRV me Reagim Kolektiv}}
+\author{\textbf{Azem Elezi}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Hyrje dhe Formulimi Matematik}
+Ky projekt studion dinamikën e përhapjes së një infeksioni duke përdorur modelin e zgjeruar \textbf{SEIRV} (Susceptible, Exposed, Infectious, Recovered, Vaccinated). Inovacioni kryesor i këtij modeli qëndron në përfshirjen e \textbf{sjelljes kolektive ($\eta$)}, ku shkalla e kontaktit bazë ($\beta_0$) nuk është konstante, por ndryshon në mënyrë dinamike si reagim ndaj numrit të të infektuarve aktivë ($I$) në popullatë.
+
+Ekuacioni i transmetimit efektiv përcaktohet si:
+\begin{equation}
+\beta_{\text{eff}}(I) = \max\left(\beta_0 \left(1 - \eta \frac{I}{N}\right), 0\right)
+\end{equation}
+
+Sistemi i ekuacioneve diferenciale jolineare që rregullon modelin është:
+\begin{align}
+\frac{dS}{dt} &= -\beta_{\text{eff}}(I) \frac{S I}{N} - \nu S \\
+\frac{dE}{dt} &= \beta_{\text{eff}}(I) \frac{S I}{N} - \sigma E \\
+\frac{dI}{dt} &= \sigma E - \gamma I \\
+\frac{dR}{dt} &= \gamma I \\
+\frac{dV}{dt} &= \nu S
+\end{align}
+
+Ku parametrat fillestarë të sistemit janë përcaktuar si:
+\begin{itemize}
+    \item $N$: Popullata totale ($1,000,000$)
+    \item $\beta_0$: Shkalla bazë e transmetimit ($0.5$)
+    \item $\sigma$: Shkalla e kalimit nga i ekspozuar në të infektuar ($1/5 \text{ ditë}^{-1}$)
+    \item $\gamma$: Shkalla e shërimit ($1/10 \text{ ditë}^{-1}$)
+    \item $\nu$: Shkalla e vaksinimit ditor ($0.001$)
+\end{itemize}
+
+\section{Rezultatet dhe Analiza e Sensitivitetit}
+Për të vlerësuar ndikimin e ndryshimit të sjelljes njerëzore (distancimi social, ndërgjegjësimi higjienik), u krye një analizë sensitiviteti duke skanuar parametrin $\eta$ në katër skenarë të ndryshëm: $\eta = [0.0, 0.4, 0.8, 1.2]$. Rezultatet numerike të simuluara nëpërmjet paketës \texttt{SciPy} janë përmbledhur në Tabelën \ref{tab:metrikat}.
+
+\begin{table}[htbp]
+\centering
+\caption{Metrikat e Kulmit Epidemik (Peak Analysis) për vlera të ndryshme të $\eta$.}
+\label: \label{tab:metrikat}
+\vspace{0.5em}
+\begin{tabular}{cccc}
+\toprule
+\textbf{Vlera e $\eta$} & \textbf{Kulmi i të Infektuarve ($I_{\max}$)} & \textbf{Dita e Kulmit (Peak Day)} & \textbf{Statusi i Kurbës} \\
+\midrule
+\textbf{0.0} (Pa reagim)     & 275,542 & 76.4 & Kurba më e lartë \\
+\textbf{0.4} (Reagim i dobët)  & 263,450 & 76.9 & Fillimi i sheshimit \\
+\textbf{0.8} (Reagim mesatar) & 250,561 & 77.4 & Zhvendosje në kohë \\
+\textbf{1.2} (Reagim i fortë)  & 236,730 & 78.0 & Kurba më e sheshtë \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Diskutimi i Grafikëve}
+Nga simulimet e kryera (të ruajtura automatikisht në folderin \texttt{results/figures/}), vërehen dy dukuri kryesore epidemiologjike:
+\begin{enumerate}
+    \item \textbf{Efekti ``Sheshimi i Kurbës'' (Flattening the Curve):} Me rritjen e parametrit të sjelljes kolektive nga $\eta = 0.0$ në $\eta = 1.2$, numri maksimal i të infektuarve aktivë ulet nga $275,542$ në $236,730$ (një rënie prej rreth $14\%$). Kjo vërteton matematikisht se ndryshimi i sjelljes redukton ngarkesën e menjëhershme mbi sistemin spitalor.
+    \item \textbf{Shtyrja e Kohës së Kulmit (Peak Delay):} Rritja e reagimit kolektiv e zhvendos ditën e pikut nga dita $76.4$ në ditën $78.0$. Kjo shtyrje kohore u jep autoriteteve shëndetësore dritare kritike për alokimin e burimeve mjekësore dhe avancimin e fushatës së vaksinimit ($V$).
+\end{enumerate}
+
+\section{Konkluzione}
+Modeli i zhvilluar dëshmon me sukses se ecuria e një epidemie nuk varet vetëm nga vetitë biologjike të patogjenit ($\beta_0, \gamma$), por në mënyrë kritike nga \textbf{reagimi socio-sjellës i popullatës}. Ndërsa vaksinimi ($V$) siguron stabilizimin e sistemit në afatgjatë, sjellja kolektive dinamike ($\eta$) shërben si mekanizmi kryesor për menaxhimin dhe zbutjen e fazës akute të krizës.
+
+\end{document}
