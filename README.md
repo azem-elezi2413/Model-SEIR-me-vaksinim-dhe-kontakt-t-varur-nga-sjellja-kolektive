@@ -24,6 +24,14 @@ $$\frac{dV}{dt} = \nu S$$
 $$\beta_{eff}(t) = \beta_0 [1 - \eta I(t)/N]$$
 Ku $\eta$ është koeficienti i reagimit kolektiv.
 
+
+### Bashkëpunimi dhe Ndarja e Kontributeve
+
+* **Ndihma për Kejsin:** Kam asistuar në strukturimin dhe verifikimin e skemave të integrimit numerik (si metodat Euler ose Runge-Kutta). Duke qenë se modeli im përfaqëson rastin ideal, kam ndihmuar në verifikimin e kodit të Kejsit për të siguruar që ai funksionon saktë kur koeficienti i rezistencës së ajrit vendoset zero.
+* **Ndihma për Vjorisën:** Kam ofruar "skeletin" fillestar të kodit dhe strukturën bazë të ekuacioneve tona diferenciale. Ky kod shërbeu si pikënisje për Vjorisën për të shtuar termin jolinear ($x^3$) që i nevojitej për Oshilatorin Duffing, duke na lejuar të bëjmë një krahasim të qartë midis modelit tim linear dhe modelit të saj kaotik.
+* **Asistenca e pranuar:** Përmes bashkëpunimit me Kejsin, kam integruar në kod një variant dytësor "me fërkim" për të krahasuar modelin tim ideal me realitetin. Gjithashtu, Vjorisa ka ndihmuar në standardizimin e grafikëve të mi duke përdorur `matplotlib` dhe në ruajtjen automatike të tyre te `/results/figures/`.
+
+
 ## 3. Struktura e Projektit
 ```text
 seirv_behavior_model/
@@ -40,3 +48,5 @@ seirv_behavior_model/
 ├── report/
 │   └── project_report.tex        # Raporti teknik
 └── requirements.txt              # Varësitë (numpy, scipy, matplotlib)
+
+
